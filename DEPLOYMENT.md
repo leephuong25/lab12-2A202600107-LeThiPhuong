@@ -77,7 +77,7 @@ curl https://lab11-production-3c63.up.railway.app/metrics \
 - [Deployment dashboard](screenshots/dashboard.png)
 - [Service running](screenshots/running.png)
 - [Test results](screenshots/test.png)
-```
+
 
 ## Architecture
 
@@ -95,7 +95,7 @@ curl https://lab11-production-3c63.up.railway.app/metrics \
 ┌──────────────┐
 │    Redis     │  ← Session cache (optional, fallback to in-memory)
 └──────────────┘
-
+```
 ##  Pre-Submission Checklist
 
 - [ ] Repository is public (or instructor has access)
