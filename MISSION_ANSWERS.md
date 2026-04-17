@@ -9,27 +9,33 @@
 ### Exercise 1.1: Anti-patterns found
 
 1. API key hardcode (sk-hardcoded-fake-key...) 
+
    -> Nếu push lên GitHub, key/password bị lộ ngay lập tức. Attacker có thể dùng key của bạn để gọi API, gây bill khổng lồ.
-2. Database URL hardcode 
+3. Database URL hardcode 
+
    -> Lộ credentials  
-3. Print thay vì proper logging + log ra secret:
+5. Print thay vì proper logging + log ra secret:
+
    ->  Dùng `print()` thay vì structured logging. Nghiêm trọng hơn là log ra API key — bất kỳ ai xem log đều thấy secret.
 
-4. Không có /health endpoint 
+7. Không có /health endpoint 
    -> Khi deploy lên cloud (Railway, Render, K8s), platform không có cách nào biết agent có còn sống không. Nếu agent crash, platform không tự restart được.
 
-5. Port cứng (localhost:8000) 
+8. Port cứng (localhost:8000) 
    ```python
    host="localhost",  # chỉ chạy trên local
    port=8000,         # cứng port
    ```
-   -> `localhost` chỉ cho phép kết nối từ chính máy đó, container bên ngoài không truy cập được. Port cứng xung đột với port mà cloud platform inject qua `PORT` env var.
 
-6. Debug reload 
-   -> `reload=True` chỉ dùng khi develop. Trong production, nó gây restart không cần thiết, tiêu tốn resource và có thể gây mất request.
+    -> `localhost` chỉ cho phép kết nối từ chính máy đó, container bên ngoài không truy cập được. Port cứng xung đột với port mà cloud platform inject qua `PORT` env var.
 
-7. Không graceful shutdown 
-   -> Khi server nhận SIGTERM (tín hiệu dừng), nó tắt đột ngột. Request đang xử lý bị ngắt (BrokenPipeError), dữ liệu có thể chưa được lưu, gây trải nghiệm tồi cho user.
+10. Debug reload 
+
+    -> `reload=True` chỉ dùng khi develop. Trong production, nó gây restart không cần thiết, tiêu tốn resource và có thể gây mất request.
+
+12. Không graceful shutdown 
+
+    -> Khi server nhận SIGTERM (tín hiệu dừng), nó tắt đột ngột. Request đang xử lý bị ngắt (BrokenPipeError), dữ liệu có thể chưa được lưu, gây trải nghiệm tồi cho user.
 
 ### Exercise 1.3: Comparison table
 | Feature | Develop | Production | Why Important? |
@@ -51,8 +57,6 @@
 ...
 
 # Giải Thích Dockerfile Cơ Bản
-
-Dưới đây là bảng tổng hợp các kiến thức quan trọng khi xây dựng Docker Image cho ứng dụng Python.
 
 | Câu Hỏi | Trả Lời | Giải Thích |
 | :--- | :--- | :--- |
