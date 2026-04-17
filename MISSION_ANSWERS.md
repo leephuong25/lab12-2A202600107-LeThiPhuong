@@ -1,9 +1,10 @@
 # Day 12 Lab - Mission Answers
 
 > **Student:** Lê Thị Phương
-> **Student ID:** 2A202600107 
+> 
+> **Student ID:** 2A202600107
+> 
 > **Date:** 2026-04-17
-
 ## Part 1: Localhost vs Production
 
 ### Exercise 1.1: Anti-patterns found
@@ -52,9 +53,6 @@
 ## Part 2: Docker
 
 ### Exercise 2.1: Dockerfile questions
-1. Base image: [Your answer]
-2. Working directory: [Your answer]
-...
 
 # Giải Thích Dockerfile Cơ Bản
 
@@ -129,8 +127,8 @@
 ## Part 3: Cloud Deployment
 
 ### Exercise 3.1: Railway deployment
-- URL: https://agent-production-7c44.up.railway.app/docs
-- Screenshot: ![alt text](Screenshot%202026-04-17%20162422.png)
+- URL: https://lab11-production-3c63.up.railway.app/docs
+- Screenshot: ![alt text](screenshots/running.png)
 
 
 ## Part 4: API Security
@@ -142,35 +140,12 @@
 ![alt text](screenshots/image-1.png)
 ![alt text](screenshots/image-2.png)
 
-Thử không có Key:
-{"detail":"Missing API key. Include header: X-API-Key: <your-key>"}
-
-Thử có key:
-{"question":"Hello","answer":"Agent đang hoạt động tốt! (mock response) Hỏi thêm câu hỏi đi nhé."}
 
 4.2. Chạy thử JWT & Rate Limit (Exercise 4.2 - 4.3)
 
-```
-curl -X POST http://localhost:8000/auth/token -H "Content-Type: application/json" -d "{\"username\": \"student\", \"password\": \"demo123\"}"
-```
-result:
-{"access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdHVkZW50Iiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NzY0MzEzNDQsImV4cCI6MTc3NjQzNDk0NH0.dGuy49ka27bsW_3h-JsIDLO-Oademun2oaVGQJPuFwY","token_type":"bearer","expires_in_minutes":60,"hint":"Include in header: Authorization: Bearer eyJhbGciOiJIUzI1NiIs..."}
-
-```
-curl -X POST http://localhost:8000/ask ^
-  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdHVkZW50Iiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NzY0MzEzNDQsImV4cCI6MTc3NjQzNDk0NH0.dGuy49ka27bsW_3h-JsIDLO-Oademun2oaVGQJPuFwY" ^
-  -H "Content-Type: application/json" ^
-  -d "{\"question\": \"Explain JWT\"}"
-
-```
-result:
-{"question":"Explain JWT","answer":"Tôi là AI agent được deploy lên cloud. Câu hỏi của bạn đã được nhận.","usage":{"requests_remaining":9,"budget_remaining_usd":1.9e-05}}
+![alt text](screenshots/test_rate_limit.PNG)
 
 
-
-for /L %i in (1,1,20) do curl -X POST http://localhost:8000/ask -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdHVkZW50Iiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NzY0MzEzNDQsImV4cCI6MTc3NjQzNDk0NH0.dGuy49ka27bsW_3h-JsIDLO-Oademun2oaVGQJPuFwY" -H "Content-Type: application/json" -d "{\"question\": \"Test %i\"}"
-
-Result: {"detail":{"error":"Rate limit exceeded","limit":10,"window_seconds":60,"retry_after_seconds":54}}
 
 ### Exercise 4.4: Cost guard implementation
 
@@ -266,13 +241,6 @@ def load_session(session_id):
 3. Conversation history vẫn đầy đủ vì lưu trong Redis
 4. Output: "Session history preserved across all instances via Redis!"
 
----
-
-Kết quả thử nghiệm (Test Results)
-
-{"session_id":"123","question":"Hello","answer":"Tôi là AI agent được deploy lên cloud. Câu hỏi của bạn đã được nhận.","turn":2,"served_by":"instance-c3cd01","storage":"redis"}
-
-![alt text](screenshots/running.png)
 
 ## Part 6: Final Project
 
